@@ -1,14 +1,12 @@
 pub trait MessageWriter {
-    fn write(&self);
+    fn write(&self, message: &str);
 }
 
-pub struct ConsoleMessageWriter {
-    message: String,
-}
+pub struct ConsoleMessageWriter;
 
 impl MessageWriter for ConsoleMessageWriter {
-    fn write(&self) {
-        println!("{}", self.message);
+    fn write(&self, message: &str) {
+        println!("{}", message);
     }
 }
 
@@ -17,15 +15,15 @@ pub struct Salutation<'a> {
 }
 
 impl<'a> Salutation<'a> {
-    fn exclaim(&self) {
-        self.writer.write();
+    fn exclaim(&self, message: &str) {
+        self.writer.write(message);
     }
 }
 
 fn main() {
-    let writer = ConsoleMessageWriter{message: String::from("Hello DI")};
+    let writer = ConsoleMessageWriter;
     let salutation = Salutation { writer: &writer,};
 
-    salutation.exclaim();
+    salutation.exclaim("Hello DI!");
 }
 
